@@ -1,0 +1,59 @@
+services:
+  # Webhook API - Handles ElevenLabs callbacks and WhatsApp sending
+  - type: web
+    name: cerca-webhook
+    env: python
+    region: oregon
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.webhook:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_AGENT_ID
+        sync: false
+      - key: ELEVENLABS_AGENT_PHONE_NUMBER_ID
+        sync: false
+      - key: ELEVENLABS_WEBHOOK_SECRET
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_WHATSAPP_FROM
+        sync: false
+      - key: FALLBACK_FAMILY_WHATSAPP
+        sync: false
+    healthCheckPath: /health
+    disk:
+      name: cerca-data
+      mountPath: /opt/render/project/src/app
+      sizeGB: 1
+
+  # Scheduler - Triggers daily calls automatically
+  - type: worker
+    name: cerca-scheduler
+    env: python
+    region: oregon
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app/scheduler.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_AGENT_ID
+        sync: false
+      - key: ELEVENLABS_AGENT_PHONE_NUMBER_ID
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_WHATSAPP_FROM
+        sync: false
+      - key: FALLBACK_FAMILY_WHATSAPP
+        sync: false
