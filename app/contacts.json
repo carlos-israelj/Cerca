@@ -1,0 +1,27 @@
+{
+  "contacts": [
+    {
+      "id": "maria_001",
+      "active": true,
+      "elder_name": "María",
+      "elder_phone": "+59399XXXXXXX",
+      "family_name": "Carlos",
+      "family_whatsapp": "whatsapp:+1XXXXXXXXXX",
+      "timezone": "America/Guayaquil",
+      "call_time": "09:00",
+      "medications": [
+        {
+          "name": "Losartán",
+          "time": "09:00",
+          "note": "para la presión"
+        }
+      ],
+      "topics": [
+        "sus plantas",
+        "su nieto Mateo",
+        "el clima en Cuenca"
+      ],
+      "notes": "Vive sola. Carlos vive en EE.UU."
+    }
+  ]
+}
